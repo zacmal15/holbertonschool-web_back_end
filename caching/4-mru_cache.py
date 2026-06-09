@@ -28,12 +28,12 @@ class MRUCache(BaseCaching):
             del self.cache_data[discard_key]
             print("DISCARD: {}".format(discard_key))
 
-        def get(self, key):
-            """Return the value linked to the given key from the cache."""
-            if key is None or key not in self.cache_data:
-                return None
+    def get(self, key):
+        """Return the value linked to the given key from the cache."""
+        if key is None or key not in self.cache_data:
+            return None
 
-            self.order.remove(key)
-            self.order.append(key)
+        self.order.remove(key)
+        self.order.append(key)
 
-            return self.cache_data.get(key)
+        return self.cache_data.get(key)
