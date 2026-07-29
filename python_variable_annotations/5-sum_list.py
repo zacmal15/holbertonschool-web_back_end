@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""This module provides a functrion that returns the suym of a list of floats."""
+"""This module provides a function that returns the sum of a list of floats."""
 
 from typing import List
 
