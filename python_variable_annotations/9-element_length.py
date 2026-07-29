@@ -8,4 +8,4 @@ def element_length(
         lst: Iterable[Sequence],
 ) -> List[Tuple[Sequence, int]]:
     """Return each sequence together with its length."""
-    return [(i , len(i)) for i in lst]
+    return [(i, len(i)) for i in lst]
