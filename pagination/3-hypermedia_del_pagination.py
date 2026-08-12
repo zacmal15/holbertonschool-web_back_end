@@ -3,7 +3,7 @@
 
 import csv
 import math
-from typing import List, Dict
+from typing import Dict, List, Optional, Union
 
 
 class Server:
@@ -11,12 +11,12 @@ class Server:
 
     DATA_FILE = "Popular_Baby_Names.csv"
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the server dataset caches."""
-        self.__dataset = None
-        self.__indexed_dataset = None
+        self.__dataset: Optional[List[List[str]]] = None
+        self.__indexed_dataset: Optional[Dict[int, List[str]]] = None
 
-    def dataset(self) -> List[List]:
+    def dataset(self) -> List[List[str]]:
         """Return the cached dataset."""
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
@@ -26,7 +26,7 @@ class Server:
 
         return self.__dataset
 
-    def indexed_dataset(self) -> Dict[int, List]:
+    def indexed_dataset(self) -> Dict[int, List[str]]:
         """Return the dataset indexed by its original sorting position."""
         if self.__indexed_dataset is None:
             dataset = self.dataset()
@@ -37,18 +37,21 @@ class Server:
 
         return self.__indexed_dataset
 
-    def get_hyper_index(self, index: int = None,
-                        page_size: int = 10) -> Dict:
-        """Return a deletion-resilient page starting at the given index."""
+    def get_hyper_index(
+            self, index: Optional[int] = None,
+            page_size: int = 10) -> Dict[
+                str, Union[int, List[List[str]]]]:
+        """Return a deletion-resilient page with pagination metadata."""
         if index is None:
             index = 0
 
         assert isinstance(index, int)
         assert 0 <= index < len(self.dataset())
+        assert isinstance(page_size, int) and page_size > 0
 
         indexed_data = self.indexed_dataset()
-        data = []
-        next_index = index
+        data: List[List[str]] = []
+        next_index: int = index
 
         while len(data) < page_size:
             if next_index in indexed_data:
@@ -56,8 +59,8 @@ class Server:
             next_index += 1
 
         return {
-            'index': index,
-            'data': data,
-            'page_size': len(data),
-            'next_index': next_index,
+            "index": index,
+            "data": data,
+            "page_size": len(data),
+            "next_index": next_index,
         }
