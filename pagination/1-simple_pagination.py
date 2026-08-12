@@ -3,10 +3,10 @@
 
 import csv
 import math
-from typing import List
+from typing import List, Tuple
 
 
-def index_range(page: int, page_size: int) -> tuple:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """Return the start and end indexes for a pagination range."""
     start = (page - 1) * page_size
     end = page * page_size
@@ -38,7 +38,6 @@ class Server:
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
-        range_idx = index_range(page, page_size)
-        indexed_data = self.dataset()[range_idx[0]:range_idx[1]]
+        start, end = index_range(page, page_size)
 
-        return indexed_data
+        return self.dataset()[start:end]
