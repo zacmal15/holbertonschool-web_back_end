@@ -19,7 +19,7 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """Initialize the server dataset."""
+        """Initialize the server dataset cache."""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
@@ -39,9 +39,5 @@ class Server:
         assert isinstance(page_size, int) and page_size > 0
 
         start, end = index_range(page, page_size)
-        dataset = self.dataset()
 
-        if start >= len(dataset):
-            return []
-
-        return dataset[start:end]
+        return self.dataset()[start:end]
