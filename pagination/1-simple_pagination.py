@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Module providing simple pagination for a baby names dataset."""
+"""Module for simple pagination."""
 
 import csv
-from typing import List, Tuple
+import math
+from typing import List
 
 
-def index_range(page: int, page_size: int) -> Tuple[int, int]:
-    """Return the start and end indexes for pagination."""
+def index_range(page: int, page_size: int) -> tuple:
+    """Return the start and end indexes for a pagination range."""
     start = (page - 1) * page_size
     end = page * page_size
     return (start, end)
@@ -18,11 +19,11 @@ class Server:
     DATA_FILE = "Popular_Baby_Names.csv"
 
     def __init__(self):
-        """Initialize the server with an empty dataset cache."""
+        """Initialize the server dataset."""
         self.__dataset = None
 
     def dataset(self) -> List[List]:
-        """Return the cached baby names dataset."""
+        """Return the cached dataset."""
         if self.__dataset is None:
             with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)
@@ -33,11 +34,14 @@ class Server:
 
     def get_page(self, page: int = 1,
                  page_size: int = 10) -> List[List]:
-        """Return one page of the dataset."""
+        """Return the requested page of the dataset."""
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
         start, end = index_range(page, page_size)
-        data = self.dataset()
+        dataset = self.dataset()
 
-        return data[start:end]
+        if start >= len(dataset):
+            return []
+
+        return dataset[start:end]
