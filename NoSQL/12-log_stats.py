@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-""" Log stats task """
+""" 11-main """
 
 from pymongo import MongoClient
 
 
 if __name__ == "__main__":
-    """ Connect to mongo and check logs"""
+    """ connection to mongddb and check logs"""
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
 
