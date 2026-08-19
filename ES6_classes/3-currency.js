@@ -16,7 +16,7 @@ export default class Currency {
     }
 
     set name(value) {
-        this._ = value;
+        this._name = value;
     }
 
     displayFullCurrency() {
