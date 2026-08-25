@@ -1,0 +1,1 @@
+this folder contains work relating to data manipulation in es6 js.
