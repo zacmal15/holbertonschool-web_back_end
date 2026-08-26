@@ -1,0 +1,1 @@
+this folder contains work regarding promises in ES6
